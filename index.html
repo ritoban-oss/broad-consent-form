@@ -452,6 +452,7 @@ function goTo(n){
   steps.forEach(s => s.classList.toggle("active", s.dataset.step == n));
   state.step = n;
   updateProgress(n);
+  if(n == 4) ensureCanvasReady();
   window.scrollTo({top:0, behavior:"smooth"});
 }
 function updateProgress(n){
@@ -564,7 +565,7 @@ document.getElementById("resendOtp").addEventListener("click", async ()=>{
 /* ---------------- step 4: signature pad ---------------- */
 const canvas = document.getElementById("sigpad");
 const ctx = canvas.getContext("2d");
-let drawing = false, hasSignature = false;
+let drawing = false, hasSignature = false, canvasReady = false;
 
 function fitCanvas(){
   const ratio = window.devicePixelRatio || 1;
@@ -577,7 +578,16 @@ function fitCanvas(){
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
 }
+// The signature step is hidden (display:none) until the user reaches it, so
+// sizing the canvas at page load would measure it as 0x0. Size it lazily,
+// the first time it's actually visible, instead.
+function ensureCanvasReady(){
+  if(canvasReady) return;
+  fitCanvas();
+  canvasReady = true;
+}
 window.addEventListener("resize", ()=>{
+  if(!canvasReady) return;
   const snapshot = hasSignature ? canvas.toDataURL() : null;
   fitCanvas();
   if(snapshot){
@@ -587,7 +597,6 @@ window.addEventListener("resize", ()=>{
     img.src = snapshot;
   }
 });
-fitCanvas();
 
 function pos(e){
   const rect = canvas.getBoundingClientRect();
