@@ -313,7 +313,7 @@
         <p>Your data is used for research purposes only. It is not sold, licensed, or put to any commercial use, by The Institute of Sleep Science Kolkata or by any third party it is shared with.</p>
 
         <h3>Contact</h3>
-        <p>Principal Investigator: Somnath Maity. For questions, complaints, or to withdraw this consent, contact <a href="mailto:sleepsciencekol@gmail.com">sleepsciencekol@gmail.com</a>.</p>
+        <p>Principal Investigator: Dr. Somnath Maity. For questions, complaints, or to withdraw this consent, contact <a href="mailto:sleepsciencekol@gmail.com">sleepsciencekol@gmail.com</a>.</p>
       </div>
     </div>
 
@@ -436,7 +436,7 @@
 /* ============================================================
    CONFIG — set this to your deployed Apps Script Web App URL
    ============================================================ */
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby-EiyrSoqJA0P-MkXm0rzWPtohVIC1uRuS6iO-EDyZk9oauEdEsttKFyy1smRBAtX_0w/exec";
+const APPS_SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
 
 /* ---------------- state & navigation ---------------- */
 const state = {
@@ -577,7 +577,16 @@ function fitCanvas(){
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
 }
-window.addEventListener("resize", ()=>{ const d = canvas.toDataURL(); fitCanvas(); });
+window.addEventListener("resize", ()=>{
+  const snapshot = hasSignature ? canvas.toDataURL() : null;
+  fitCanvas();
+  if(snapshot){
+    const rect = canvas.getBoundingClientRect();
+    const img = new Image();
+    img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);
+    img.src = snapshot;
+  }
+});
 fitCanvas();
 
 function pos(e){
