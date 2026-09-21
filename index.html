@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Consent — The Institute of Sleep Science Kolkata</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F6F4;
+    --paper-raised:#FFFFFF;
+    --ink:#16232E;
+    --ink-soft:#4B5B68;
+    --navy:#1F3A54;
+    --navy-deep:#152B3F;
+    --teal:#2F5D62;
+    --dawn:#B8863B;
+    --dawn-soft:#E7CFA4;
+    --line:#DCE1E4;
+    --error:#9A3B3B;
+    --radius:3px;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.55;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    margin:0 0 0.4em 0;
+    color:var(--navy-deep);
+  }
+  .shell{
+    max-width:640px;
+    margin:0 auto;
+    padding:48px 24px 96px;
+  }
+  header.top{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    padding-bottom:28px;
+    margin-bottom:36px;
+    border-bottom:1px solid var(--line);
+  }
+  .org{
+    font-family:'Fraunces',Georgia,serif;
+    font-size:15px;
+    font-weight:500;
+    color:var(--navy);
+  }
+  .org small{
+    display:block;
+    font-family:'Inter',sans-serif;
+    font-size:11.5px;
+    font-weight:400;
+    color:var(--ink-soft);
+    margin-top:2px;
+  }
+
+  /* step progress: a real sequence, so a line + markers is warranted */
+  .progress{
+    display:flex;
+    align-items:center;
+    gap:0;
+    margin-bottom:40px;
+  }
+  .progress .seg{
+    flex:1;
+    height:2px;
+    background:var(--line);
+    position:relative;
+  }
+  .progress .seg.done{ background:var(--dawn); }
+  .progress .dot{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--line);
+    flex:0 0 auto;
+    transition:border-color .3s ease, background .3s ease;
+  }
+  .progress .dot.done{ border-color:var(--dawn); background:var(--dawn); }
+  .progress .dot.active{ border-color:var(--navy); background:var(--navy); }
+
+  .step{ display:none; animation:rise .35s ease; }
+  .step.active{ display:block; }
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(6px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .kicker{
+    font-size:13px;
+    color:var(--teal);
+    margin-bottom:6px;
+  }
+  h1{ font-size:28px; }
+  h2{ font-size:21px; }
+  p.lead{ color:var(--ink-soft); font-size:15.5px; max-width:58ch; }
+
+  .card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px;
+    margin:20px 0;
+  }
+  .consent-text{
+    max-height:340px;
+    overflow-y:auto;
+    padding-right:12px;
+    font-size:14.5px;
+    color:var(--ink);
+  }
+  .consent-text h3{ font-size:15px; margin-top:20px; }
+  .consent-text h3:first-child{ margin-top:0; }
+  .consent-text p{ margin:0 0 12px 0; color:var(--ink-soft); }
+  .consent-text ul.safeguards{
+    margin:0 0 12px 0;
+    padding-left:0;
+    list-style:none;
+  }
+  .consent-text ul.safeguards li{
+    position:relative;
+    padding-left:20px;
+    margin-bottom:12px;
+    color:var(--ink-soft);
+  }
+  .consent-text ul.safeguards li:last-child{ margin-bottom:0; }
+  .consent-text ul.safeguards li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:9px;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--dawn);
+  }
+
+  label{
+    display:block;
+    font-size:13px;
+    font-weight:500;
+    color:var(--navy-deep);
+    margin:0 0 6px 0;
+  }
+  .field{ margin-bottom:18px; }
+  input[type=text], input[type=email], input[type=tel], input[type=number]{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    color:var(--ink);
+    background:var(--paper-raised);
+  }
+  input:focus{
+    outline:none;
+    border-color:var(--navy);
+    box-shadow:0 0 0 3px rgba(31,58,84,0.12);
+  }
+  .otp-row{ display:flex; gap:10px; }
+  .otp-row input{ letter-spacing:0.3em; font-variant-numeric:tabular-nums; }
+
+  .check-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin:18px 0;
+  }
+  .check-row input{ margin-top:3px; width:16px; height:16px; accent-color:var(--navy); }
+  .check-row label{ font-size:14px; font-weight:400; color:var(--ink); margin:0; }
+
+  button{
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    font-weight:500;
+    border:none;
+    border-radius:var(--radius);
+    padding:12px 22px;
+    cursor:pointer;
+    transition:background .15s ease, opacity .15s ease;
+  }
+  button.primary{ background:var(--navy); color:#fff; }
+  button.primary:hover{ background:var(--navy-deep); }
+  button.primary:disabled{ opacity:.45; cursor:not-allowed; }
+  button.ghost{ background:transparent; color:var(--ink-soft); padding:12px 8px; }
+  button.ghost:hover{ color:var(--ink); }
+  .btn-row{ display:flex; justify-content:space-between; align-items:center; margin-top:26px; }
+
+  .hint{ font-size:12.5px; color:var(--ink-soft); margin-top:6px; }
+  .msg{ font-size:13.5px; margin-top:10px; padding:10px 12px; border-radius:var(--radius); display:none; }
+  .msg.show{ display:block; }
+  .msg.error{ background:#F7EBEB; color:var(--error); }
+  .msg.ok{ background:#EAF1EC; color:#2F5D3A; }
+
+  canvas#sigpad{
+    width:100%;
+    height:160px;
+    border:1px dashed var(--line);
+    border-radius:var(--radius);
+    background:var(--paper-raised);
+    touch-action:none;
+    cursor:crosshair;
+  }
+  .sig-tools{ display:flex; justify-content:space-between; align-items:center; margin-top:8px; }
+
+  .attest{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    background:#F0EEE8;
+    border-left:2px solid var(--dawn);
+    padding:12px 14px;
+    margin:18px 0;
+  }
+
+  .confirm-id{
+    font-family:'Fraunces',Georgia,serif;
+    font-size:22px;
+    color:var(--navy-deep);
+    letter-spacing:0.02em;
+    margin:14px 0;
+  }
+  .audit{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.9;
+    border-top:1px solid var(--line);
+    padding-top:14px;
+    margin-top:18px;
+  }
+  .spinner{
+    display:inline-block; width:14px; height:14px;
+    border:2px solid rgba(255,255,255,.4);
+    border-top-color:#fff;
+    border-radius:50%;
+    animation:spin .7s linear infinite;
+    vertical-align:-2px; margin-right:8px;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  footer.foot{
+    margin-top:48px;
+    font-size:12px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <header class="top">
+    <div class="org">The Institute of Sleep Science Kolkata
+      <small>Research participant consent</small>
+    </div>
+  </header>
+
+  <div class="progress" id="progressBar">
+    <div class="dot active" data-step="1"></div>
+    <div class="seg" data-seg="1"></div>
+    <div class="dot" data-step="2"></div>
+    <div class="seg" data-seg="2"></div>
+    <div class="dot" data-step="3"></div>
+    <div class="seg" data-seg="3"></div>
+    <div class="dot" data-step="4"></div>
+  </div>
+
+  <!-- STEP 1: Study information -->
+  <section class="step active" data-step="1">
+    <div class="kicker">Before you begin</div>
+    <h1>Consent for future sleep research at The Institute of Sleep Science Kolkata</h1>
+    <p class="lead">Please read the information below in full. It explains what this broad consent covers, how your data will be used in future research, and your rights as a participant — including the right to withdraw at any time. You can only continue once you've confirmed you've read it.</p>
+
+    <div class="card">
+      <div class="consent-text" id="consentText">
+        <h3>What this consent covers</h3>
+        <p>This is a <strong>broad consent</strong>, as described in the ICMR National Ethical Guidelines for Biomedical and Health Research Involving Human Participants (2017). It is not consent to a single named study. Instead, it covers the future research use of your clinical data and questionnaire responses generated through your ongoing care and treatment at The Institute of Sleep Science Kolkata, as well as any past medical records you choose to voluntarily share with us — for example, in studies on sleep architecture, obstructive sleep apnoea, PAP therapy adherence, or drug-induced sleep endoscopy (DISE). No separate research procedures, trials, or sample collection are involved. It does not extend to research outside this scope, or to sharing your identifiable data with parties outside The Institute of Sleep Science Kolkata, without separately asking you.</p>
+
+        <h3>Why broad consent, and what stays in place regardless</h3>
+        <p>Asking you to re-consent before every individual future study is often impractical and, ICMR notes, can itself become a burden on participants. Broad consent lets The Institute of Sleep Science Kolkata use already-collected data for related future research without contacting you again for each one — with these protections staying in place regardless:</p>
+        <ul class="safeguards">
+          <li>Every future research use of your data must still be reviewed and approved by The Institute of Sleep Science Kolkata's Institutional Ethics Committee before it proceeds, on the same terms as any new study.</li>
+          <li>The Institute of Sleep Science Kolkata will maintain your contact details so you can be reached if a future use falls outside what's described here, or if the Ethics Committee determines fresh consent is warranted.</li>
+          <li>You may withdraw this consent at any time, for any reason, without affecting any care or services you're otherwise entitled to. Withdrawal stops future use of your data/samples from that point on; it doesn't undo research already completed using them.</li>
+        </ul>
+
+        <h3>What this involves</h3>
+        <p>This does not involve any separate research procedures, trials, or sample collection. It covers only the data already generated through your ongoing clinical care and treatment at The Institute of Sleep Science Kolkata — sleep studies, clinical measurements, and questionnaire responses collected as part of your normal management — along with any past medical records or history from elsewhere that you choose to voluntarily disclose to us. Nothing extra is asked of you beyond your regular treatment; disclosing past records is optional and up to you.</p>
+
+        <h3>Data storage</h3>
+        <p>Identifiable data is retained only by The Institute of Sleep Science Kolkata, in its local and cloud-based storage systems, protected by identity-based authentication and access controls and by encryption both in transit and at rest. Before any data is shared with third-party research collaborators, it is de-identified.</p>
+
+        <h3>Risks and benefits</h3>
+        <p>Because this consent covers only data from your existing treatment — not any separate research procedure — there are no additional medical risks or discomforts associated with participation. Your data helps further research in ENT, sleep disorder, and pulmonary medicine.</p>
+
+        <h3>Confidentiality</h3>
+        <p>Your data is de-identified before it is shared with any third-party research collaborator. Identifiable data is never shared outside The Institute of Sleep Science Kolkata and is accessible only within its access-controlled storage systems.</p>
+
+        <h3>No commercial use</h3>
+        <p>Your data is used for research purposes only. It is not sold, licensed, or put to any commercial use, by The Institute of Sleep Science Kolkata or by any third party it is shared with.</p>
+
+        <h3>Contact</h3>
+        <p>Principal Investigator: Dr. Somnath Maity. For questions, complaints, or to withdraw this consent, contact <a href="mailto:sleepsciencekol@gmail.com">sleepsciencekol@gmail.com</a>.</p>
+      </div>
+    </div>
+
+    <div class="check-row">
+      <input type="checkbox" id="readCheck">
+      <label for="readCheck">I have read and understood the information above, and I have had the opportunity to ask questions.</label>
+    </div>
+
+    <div class="btn-row">
+      <span></span>
+      <button class="primary" id="toStep2" disabled>Continue</button>
+    </div>
+  </section>
+
+  <!-- STEP 2: Identity -->
+  <section class="step" data-step="2">
+    <div class="kicker">Step 2 of 4</div>
+    <h2>Confirm your identity</h2>
+    <p class="lead">This links your consent record to you and lets us send a one-time verification code. We do not collect your Aadhaar number or any national ID for this.</p>
+
+    <div class="field">
+      <label for="pName">Full legal name</label>
+      <input type="text" id="pName" placeholder="As it should appear on your consent record">
+    </div>
+    <div class="field">
+      <label for="pEmail">Email address</label>
+      <input type="email" id="pEmail" placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label for="pPhone">Phone number <span style="font-weight:400;color:var(--ink-soft)">(optional)</span></label>
+      <input type="tel" id="pPhone" placeholder="For the study team's records only">
+    </div>
+    <div class="field">
+      <label for="pStudyId">Study reference code <span style="font-weight:400;color:var(--ink-soft)">(if given one)</span></label>
+      <input type="text" id="pStudyId" placeholder="e.g. DISE-014">
+    </div>
+
+    <div class="msg" id="step2Msg"></div>
+
+    <div class="btn-row">
+      <button class="ghost" data-back="1">Back</button>
+      <button class="primary" id="sendOtpBtn">Send verification code</button>
+    </div>
+  </section>
+
+  <!-- STEP 3: OTP -->
+  <section class="step" data-step="3">
+    <div class="kicker">Step 3 of 4</div>
+    <h2>Verify it's you</h2>
+    <p class="lead" id="otpSentTo">We've sent a 6-digit code to your email. It expires in 10 minutes.</p>
+
+    <div class="field">
+      <label for="otpInput">Verification code</label>
+      <div class="otp-row">
+        <input type="text" id="otpInput" inputmode="numeric" maxlength="6" placeholder="000000">
+        <button class="ghost" id="resendOtp" type="button">Resend</button>
+      </div>
+    </div>
+
+    <div class="msg" id="step3Msg"></div>
+
+    <div class="btn-row">
+      <button class="ghost" data-back="2">Back</button>
+      <button class="primary" id="verifyOtpBtn">Verify</button>
+    </div>
+  </section>
+
+  <!-- STEP 4: Signature -->
+  <section class="step" data-step="4">
+    <div class="kicker">Step 4 of 4</div>
+    <h2>Sign to give consent</h2>
+    <p class="lead">Sign in the box below using your mouse or finger, and confirm your name matches your signature.</p>
+
+    <canvas id="sigpad"></canvas>
+    <div class="sig-tools">
+      <span class="hint">Draw your signature above</span>
+      <button class="ghost" id="clearSig" type="button">Clear</button>
+    </div>
+
+    <div class="attest">
+      By typing my name below and submitting, I confirm this is my legal signature, that I am giving this consent voluntarily, and that I understand this carries the same legal weight as a signature on paper.
+    </div>
+
+    <div class="field">
+      <label for="attestName">Type your full legal name to attest</label>
+      <input type="text" id="attestName" placeholder="Must match the name entered earlier">
+    </div>
+
+    <div class="msg" id="step4Msg"></div>
+
+    <div class="btn-row">
+      <button class="ghost" data-back="3">Back</button>
+      <button class="primary" id="submitBtn">Submit consent</button>
+    </div>
+  </section>
+
+  <!-- STEP 5: Confirmation -->
+  <section class="step" data-step="5">
+    <div class="kicker">Complete</div>
+    <h2>Your consent has been recorded</h2>
+    <p class="lead">Keep the reference below for your records. A copy of this consent, including the timestamp and audit trail, has been logged by the study team.</p>
+
+    <div class="confirm-id" id="confirmId">—</div>
+
+    <div class="audit" id="confirmAudit"></div>
+
+    <div class="btn-row">
+      <span></span>
+      <button class="primary" id="downloadReceipt">Download receipt</button>
+    </div>
+  </section>
+
+  <footer class="foot">
+    This is a broad consent under the ICMR National Ethical Guidelines (2017), covering The Institute of Sleep Science Kolkata's future sleep-research use of your data as described above, subject to Institutional Ethics Committee review of each use. It remains in effect until you withdraw it. This record is an electronic signature under Section 3A of the Information Technology Act, 2000, admissible as evidence under Section 63 of the Bharatiya Sakshya Adhiniyam, 2023.
+  </footer>
+
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — set this to your deployed Apps Script Web App URL
+   ============================================================ */
+const APPS_SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+/* ---------------- state & navigation ---------------- */
+const state = {
+  step: 1,
+  name: "", email: "", phone: "", studyId: "",
+  otpVerified: false,
+  consentId: null,
+  ip: null
+};
+
+const steps = document.querySelectorAll(".step");
+function goTo(n){
+  steps.forEach(s => s.classList.toggle("active", s.dataset.step == n));
+  state.step = n;
+  updateProgress(n);
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function updateProgress(n){
+  const clamped = Math.min(n,4);
+  document.querySelectorAll("#progressBar .dot").forEach(d=>{
+    const s = +d.dataset.step;
+    d.classList.toggle("done", s < clamped);
+    d.classList.toggle("active", s === clamped);
+  });
+  document.querySelectorAll("#progressBar .seg").forEach(seg=>{
+    seg.classList.toggle("done", +seg.dataset.seg < clamped);
+  });
+}
+document.querySelectorAll("[data-back]").forEach(b=>{
+  b.addEventListener("click", ()=> goTo(+b.dataset.back));
+});
+
+function showMsg(id, text, kind){
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = "msg show " + kind;
+}
+function hideMsg(id){
+  document.getElementById(id).className = "msg";
+}
+
+/* ---------------- step 1 ---------------- */
+const readCheck = document.getElementById("readCheck");
+readCheck.addEventListener("change", ()=>{
+  document.getElementById("toStep2").disabled = !readCheck.checked;
+});
+document.getElementById("toStep2").addEventListener("click", ()=> goTo(2));
+
+/* ---------------- step 2: send OTP ---------------- */
+document.getElementById("sendOtpBtn").addEventListener("click", async ()=>{
+  const name = document.getElementById("pName").value.trim();
+  const email = document.getElementById("pEmail").value.trim();
+  const phone = document.getElementById("pPhone").value.trim();
+  const studyId = document.getElementById("pStudyId").value.trim();
+
+  if(!name || !email){
+    showMsg("step2Msg","Please enter your full name and email address.","error");
+    return;
+  }
+  if(!/^\S+@\S+\.\S+$/.test(email)){
+    showMsg("step2Msg","That doesn't look like a valid email address.","error");
+    return;
+  }
+  hideMsg("step2Msg");
+  state.name = name; state.email = email; state.phone = phone; state.studyId = studyId;
+
+  const btn = document.getElementById("sendOtpBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Sending…';
+
+  try{
+    const res = await callBackend({ action:"sendOtp", name, email });
+    if(res.ok){
+      document.getElementById("otpSentTo").textContent = `We've sent a 6-digit code to ${email}. It expires in 10 minutes.`;
+      goTo(3);
+    } else {
+      showMsg("step2Msg", res.error || "Couldn't send the code. Please try again.", "error");
+    }
+  }catch(e){
+    showMsg("step2Msg", "Network error — please check your connection and try again.", "error");
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "Send verification code";
+  }
+});
+
+/* ---------------- step 3: verify OTP ---------------- */
+document.getElementById("verifyOtpBtn").addEventListener("click", async ()=>{
+  const code = document.getElementById("otpInput").value.trim();
+  if(!/^\d{6}$/.test(code)){
+    showMsg("step3Msg","Enter the 6-digit code from your email.","error");
+    return;
+  }
+  hideMsg("step3Msg");
+  const btn = document.getElementById("verifyOtpBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Verifying…';
+
+  try{
+    const res = await callBackend({ action:"verifyOtp", email: state.email, code });
+    if(res.ok){
+      state.otpVerified = true;
+      goTo(4);
+    } else {
+      showMsg("step3Msg", res.error || "That code didn't match. Check and try again.", "error");
+    }
+  }catch(e){
+    showMsg("step3Msg", "Network error — please try again.", "error");
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "Verify";
+  }
+});
+
+document.getElementById("resendOtp").addEventListener("click", async ()=>{
+  hideMsg("step3Msg");
+  try{
+    await callBackend({ action:"sendOtp", name: state.name, email: state.email });
+    showMsg("step3Msg", "A new code has been sent.", "ok");
+  }catch(e){
+    showMsg("step3Msg", "Couldn't resend right now.", "error");
+  }
+});
+
+/* ---------------- step 4: signature pad ---------------- */
+const canvas = document.getElementById("sigpad");
+const ctx = canvas.getContext("2d");
+let drawing = false, hasSignature = false;
+
+function fitCanvas(){
+  const ratio = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * ratio;
+  canvas.height = rect.height * ratio;
+  ctx.scale(ratio, ratio);
+  ctx.strokeStyle = "#16232E";
+  ctx.lineWidth = 2;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+}
+window.addEventListener("resize", ()=>{ const d = canvas.toDataURL(); fitCanvas(); });
+fitCanvas();
+
+function pos(e){
+  const rect = canvas.getBoundingClientRect();
+  const p = e.touches ? e.touches[0] : e;
+  return { x: p.clientX - rect.left, y: p.clientY - rect.top };
+}
+function start(e){ drawing = true; hasSignature = true; const p = pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); e.preventDefault(); }
+function move(e){ if(!drawing) return; const p = pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); e.preventDefault(); }
+function end(){ drawing = false; }
+
+canvas.addEventListener("mousedown", start);
+canvas.addEventListener("mousemove", move);
+window.addEventListener("mouseup", end);
+canvas.addEventListener("touchstart", start, {passive:false});
+canvas.addEventListener("touchmove", move, {passive:false});
+canvas.addEventListener("touchend", end);
+
+document.getElementById("clearSig").addEventListener("click", ()=>{
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  hasSignature = false;
+});
+
+/* ---------------- step 4: submit ---------------- */
+document.getElementById("submitBtn").addEventListener("click", async ()=>{
+  const attestName = document.getElementById("attestName").value.trim();
+  hideMsg("step4Msg");
+
+  if(!hasSignature){
+    showMsg("step4Msg","Please sign in the box above before submitting.","error");
+    return;
+  }
+  if(!attestName){
+    showMsg("step4Msg","Please type your full legal name to attest.","error");
+    return;
+  }
+  if(attestName.toLowerCase() !== state.name.toLowerCase()){
+    showMsg("step4Msg","The typed name doesn't match the name entered in step 2. Please check.","error");
+    return;
+  }
+  if(!state.otpVerified){
+    showMsg("step4Msg","Please verify your email before submitting.","error");
+    return;
+  }
+
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Submitting…';
+
+  const signatureDataUrl = canvas.toDataURL("image/png");
+
+  try{
+    let ip = "unavailable";
+    try{
+      const ipRes = await fetch("https://api.ipify.org?format=json");
+      ip = (await ipRes.json()).ip;
+    }catch(e){ /* non-fatal */ }
+
+    const payload = {
+      action: "submitConsent",
+      name: state.name,
+      email: state.email,
+      phone: state.phone,
+      studyId: state.studyId,
+      signature: signatureDataUrl,
+      ip: ip,
+      userAgent: navigator.userAgent,
+      timestamp: new Date().toISOString()
+    };
+    const res = await callBackend(payload);
+    if(res.ok){
+      state.consentId = res.consentId;
+      document.getElementById("confirmId").textContent = res.consentId;
+      document.getElementById("confirmAudit").innerHTML =
+        `Signed by ${escapeHtml(state.name)} (${escapeHtml(state.email)})<br>` +
+        `Timestamp: ${payload.timestamp}<br>` +
+        `IP address: ${ip}`;
+      goTo(5);
+    } else {
+      showMsg("step4Msg", res.error || "Something went wrong recording your consent. Please try again.", "error");
+    }
+  }catch(e){
+    showMsg("step4Msg", "Network error — your consent was not recorded. Please try again.", "error");
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "Submit consent";
+  }
+});
+
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+/* ---------------- receipt download ---------------- */
+document.getElementById("downloadReceipt").addEventListener("click", ()=>{
+  const text =
+`RESEARCH CONSENT RECEIPT
+The Institute of Sleep Science Kolkata
+
+Consent reference: ${state.consentId}
+Participant: ${state.name}
+Email: ${state.email}
+Study reference: ${state.studyId || "—"}
+Timestamp: ${new Date().toISOString()}
+
+This receipt confirms that an electronic consent, including a
+handwritten signature and email verification, was recorded for
+the above participant under Section 3A of the Information
+Technology Act, 2000. Keep this for your records.`;
+  const blob = new Blob([text], {type:"text/plain"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `consent-receipt-${state.consentId || "record"}.txt`;
+  a.click();
+});
+
+/* ---------------- backend call helper ---------------- */
+async function callBackend(payload){
+  const res = await fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" }, // avoids CORS preflight on Apps Script
+    body: JSON.stringify(payload)
+  });
+  return await res.json();
+}
+</script>
+
+</body>
+</html>
